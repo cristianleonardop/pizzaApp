@@ -4,4 +4,19 @@
 
 @tailwind utilities;
 
-@import "form"
+@import "form";
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-primary {
+  @apply .flex .bg-orange-400 .rounded .px-2 .items-center .text-white
+}
+.btn-primary:hover {
+  @apply .bg-orange-500
+}

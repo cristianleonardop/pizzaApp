@@ -1,0 +1,51 @@
+<div class="flex flex-wrap shadow px-4 my-4">
+<div class="flex w-full my-6">
+  <div class="flex w-1/2">
+    <span class="w-1/2 font-bold text-2xl">Order detail</span>
+  </div>
+  <div class="flex w-1/2 justify-end">
+  </div>
+</div>
+<div class="flex w-full bg-gray-400 rounded font-bold text-sm">
+  <div class="flex w-1/3">
+    Product
+  </div>
+  <div class="flex w-1/3">
+    Quantity
+  </div>
+  <div class="flex w-1/3">
+    Total
+  </div>
+</div>
+<% @product_orders.each do |product_order| %>
+<div class="flex w-full text-sm border-b mt-1">
+  <div class="flex w-1/3">
+    <%= product_order.product.description %>
+  </div>
+  <div class="flex w-1/3">
+    <%= product_order.quantity %>
+  </div>
+  <div class="flex w-1/3">
+    <%= product_order.total %>
+  </div>
+</div>
+<% end %>
+<div class="flex flex-wrap w-full my-2">
+  <span class="flex w-full text-gray-700 font-semibold">Total to pay: <%= @order.total %></span>
+  <span class="flex w-full text-gray-700 font-semibold ">State: <%= @order.state %></span>
+</div>
+
+<% if current_user.admin? %>
+<%= form_with model: @order, local: true, class: "flex flex-wrap w-full px-2 py-2 my-6 justify-between", id: "order-state", data: { state: @order.state } do |f| %>
+  <div class="flex w-1/2">
+    <dropdown-select :options="<%= state_props %>" :image_paths="<%= [] %>" name="state" ref="state" default="true" defaultIndexProp="<%=  @order.state %>"></dropdown-select>
+  </div>
+
+  <%= f.hidden_field :state, "v-model" => "state" %>
+
+  <div class="flex w-1/2 justify-end">
+    <%= f.submit "Update state", class: "btn-primary my-2" %>
+  </div>
+<% end %>
+</div>
+<% end %>

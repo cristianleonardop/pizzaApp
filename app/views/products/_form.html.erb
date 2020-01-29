@@ -1,0 +1,20 @@
+<%= form_with model: @product, local: true, class: "flex flex-wrap shadow py-2 px-2 my-4" do |f| %>
+  <% if @product.new_record? %>
+  <span class="flex w-full text-gray-700 font-semibold text-xl my-2 border-b pb-3">New Product:</span>
+  <% else %>
+  <span class="flex w-full text-gray-700 font-semibold text-xl my-2 border-b pb-3">Edit Product:</span>
+  <% end %>
+  <label class="text-gray-700 font-semibold mt-4" for="">Description</label>
+  <%= f.text_field :description, class: "flex w-full my-2 border rounded px-2" %>
+  <label  class="text-gray-700 font-semibold" for="">Price</label>
+  <%= f.text_field :value, type: :number, class: "flex w-full my-2 border rounded px-2" %>
+  <label   class="text-gray-700 font-semibold" for="">In stock</label>
+  <%= f.text_field :stock, type: :number, class: "flex w-full my-2 border rounded px-2" %>
+  <div class="flex w-full justify-end">
+    <% if @product.new_record? %>
+    <%= f.submit "Create", class: "btn-primary my-2" %>
+    <% else %>
+    <%= f.submit "Update", class: "btn-primary my-2" %>
+    <% end %>
+  </div>
+<% end %>

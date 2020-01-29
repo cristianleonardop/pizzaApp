@@ -1,0 +1,54 @@
+<div class="flex w-full my-6">
+  <div class="flex w-1/2">
+    <span class="w-1/2 font-bold text-2xl">Products</span>
+  </div>
+  <div class="flex w-1/2 justify-end">
+    <% if current_user.admin? %>
+    <%= link_to "Add product", new_product_path, class: "flex bg-orange-400 rounded px-2 items-center text-white hover:bg-orange-500"%>
+    <% end %>
+  </div>
+</div>
+<% if @products.any? %>
+  <div class="flex w-full bg-gray-400 rounded font-bold text-sm">
+    <div class="flex w-1/4">
+
+    </div>
+    <div class="flex w-1/4">
+      Description
+    </div>
+    <div class="flex w-1/4">
+      Price
+    </div>
+    <div class="flex w-1/4">
+      In stock
+    </div>
+  </div>
+  <% @products.each do |product| %>
+  <div class="flex w-full text-sm border-b mt-1">
+    <div class="flex w-1/4">
+      <% if current_user.admin? %>
+        <%= link_to "Edit", edit_product_path(product.id) %>
+      <% end %>
+    </div>
+    <div class="flex w-1/4">
+      <%= product.description %>
+    </div>
+    <div class="flex w-1/4">
+      <%= product.value %>
+    </div>
+    <div class="flex w-1/4">
+      <%= product.stock %>
+    </div>
+  </div>
+  <% end %>
+<% else %>
+<div class="bg-teal-100 border-l-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+<div class="flex">
+  <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+  <div>
+    <p class="font-bold">Products alert</p>
+    <p class="text-sm">There aren't available products.</p>
+  </div>
+</div>
+</div>
+<% end %>

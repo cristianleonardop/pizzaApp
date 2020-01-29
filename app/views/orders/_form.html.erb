@@ -1,0 +1,36 @@
+<%= form_with model: @order, local: true, class: "flex flex-wrap shadow px-2 py-2 my-6", id: "product-orders", data: { product_values: product_values } do |f| %>
+  <span class="flex w-full text-gray-700 font-semibold text-xl my-2 border-b pb-3">Place your order:</span>
+  <label class="text-gray-700 font-semibold mt-4" for="">Choose your pizza</label>
+  <dropdown-select :options="<%= product_props %>" :image_paths="<%= [] %>" name="product"></dropdown-select>
+  <%= f.hidden_field :product_orders_attributes, "v-model" => "productOrdersAttributes" %>
+  <%= f.hidden_field :total, "v-model" => "total" %>
+  <%= f.hidden_field :deliver_date, "v-model" => "today" %>
+  <%= f.hidden_field :order_date, "v-model" => "today" %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <div class="flex flex-wrap w-full my-2">
+    <span class="font-semibold text-gray-700 my-2">Selected Pizzas</span>
+    <span class="flex w-full text-gray-700 text-sm" v-if="product_orders_attributes.length == 0">There aren't selected pizzas</span>
+    <div class="flex w-full border-b text-gray-700 text-sm" v-for="(product, index) in product_orders_attributes">
+      <div class="flex w-1/4">
+        {{product.product_name}}
+      </div>
+      <div class="flex w-1/4">
+        {{product.total}}
+      </div>
+      <div class="flex w-1/4">
+        <input type="number" @change="setTotalProductOrder(product)" v-model="product.quantity">
+      </div>
+      <div class="flex w-1/4 justify-center">
+        <i class="fas fa-times cursor-pointer" @click="removeProductOrder(product)"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex w-full my-2">
+    <span class="text-gray-700 font-semibold">Total to pay: {{total}}</span>
+  </div>
+  <div class="flex w-full justify-end">
+    <%= f.submit "Create", class: "btn-primary my-2" %>
+  </div>
+<% end %>
